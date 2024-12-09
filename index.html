@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <title>Giga-NT PWA</title>
+</head>
+<body>
+    <header>
+        <h1>Добро пожаловать в Giga-NT PWA!</h1>
+        <p>Это прогрессивное веб-приложение.</p>
+    </header>
+    <main>
+        <p>Здесь вы можете использовать функциональность вашего веб-сайта даже в офлайн-режиме.</p>
+    </main>
+    
+    <script>
+        // Регистрация Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+                    console.log('Service Worker зарегистрирован с областью:', registration.scope);
+                }, function(error) {
+                    console.log('Ошибка регистрации Service Worker:', error);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
