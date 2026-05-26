@@ -811,18 +811,23 @@
         <div class="contact"><i class="fas fa-envelope"></i> <span id="emailSpan">aleksey@master-na-chas.ru</span></div>
     </div>
 
-    <div class="form-block">
-        <h3>Записаться на удобное время</h3>
-        <p>Перезвоню за 5 минут, согласуем детали</p>
+<div class="form-block">
+    <h3>Записаться на удобное время</h3>
+    <p>Перезвоню за 5 минут, согласуем детали</p>
+    
+    <!-- ЗДЕСЬ ФОРМА С FORMSPREE -->
+    <form action="https://formspree.io/f/xjkyqlod" method="POST">
+        <input type="hidden" name="_subject" value="🔧 Новая заявка с сайта МастерНаЧас">
+        <input type="hidden" name="_next" value="https://giga-nt.github.io/giga-nt-pwa/thanks.html">
         
         <div class="form-group">
-            <input type="text" id="formName" placeholder="Ваше имя">
+            <input type="text" name="Имя" id="formName" placeholder="Ваше имя" required>
         </div>
         <div class="form-group">
-            <input type="tel" id="formPhone" placeholder="Телефон">
+            <input type="tel" name="Телефон" id="formPhone" placeholder="Телефон" required>
         </div>
         <div class="form-group custom-select">
-            <select id="formService">
+            <select name="Услуга" id="formService" required>
                 <option value="Сантехника">🔧 Сантехника</option>
                 <option value="Электрика">⚡ Электрика</option>
                 <option value="Окна">🪟 Пластиковые окна</option>
@@ -832,6 +837,7 @@
         
         <div style="margin: 8px 0 4px; font-size: 0.8rem;">Выберите дату:</div>
         <div class="date-slots" id="dateSlots"></div>
+        <input type="hidden" name="Дата" id="selectedDateInput">
         
         <div style="margin: 8px 0 4px; font-size: 0.8rem;">Выберите время:</div>
         <div class="time-slots" id="timeSlots">
@@ -846,15 +852,11 @@
             <div class="time-slot" data-time="17:00">17:00</div>
             <div class="time-slot" data-time="18:00">18:00</div>
         </div>
+        <input type="hidden" name="Время" id="selectedTimeInput">
         
-        <button id="submitBtn">Записаться →</button>
-        <div class="form-micro"><i class="fas fa-check-circle"></i> Приеду в выбранное время. Чек через налоговую</div>
-    </div>
-
-    <footer>
-        <i class="fas fa-map-marker-alt"></i> Нижний Тагил и пригород до 20 км · 8:00–22:00 · Без выходных<br>
-        Алексей Кондратьев · Самозанятый · Чеки через приложение «Мой налог»
-    </footer>
+        <button type="submit" id="submitBtn">Записаться →</button>
+    </form>
+    <div class="form-micro"><i class="fas fa-check-circle"></i> Приеду в выбранное время. Чек через налоговую</div>
 </div>
 
 <div class="sticky-call">
@@ -996,6 +998,7 @@
                 document.querySelectorAll('.date-slot').forEach(s => s.classList.remove('selected'));
                 slot.classList.add('selected');
                 formSelectedDate = slot.dataset.date;
+                document.getElementById('selectedDateInput').value = formSelectedDate;
             });
             dateSlotsContainer.appendChild(slot);
         }
@@ -1008,75 +1011,26 @@
             document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
             slot.classList.add('selected');
             formSelectedTime = slot.dataset.time;
+            document.getElementById('selectedTimeInput').value = formSelectedTime;
         });
     });
-
-    // ==================== ОТПРАВКА НА ПОЧТУ ====================
-    const submitBtn = document.getElementById('submitBtn');
     
-    if (submitBtn) {
-        submitBtn.addEventListener('click', async (e) => {
+    // Подставляем выбранные дату и время перед отправкой
+    const form = document.querySelector('form');
+    form?.addEventListener('submit', function(e) {
+        if (!formSelectedDate) {
             e.preventDefault();
-            
-            const name = document.getElementById('formName')?.value.trim();
-            const phone = document.getElementById('formPhone')?.value.trim();
-            const service = document.getElementById('formService')?.value;
-            
-            if (!name || !phone) {
-                alert('❌ Заполните имя и телефон');
-                return;
-            }
-            
-            if (!formSelectedDate) {
-                alert('❌ Пожалуйста, выберите дату');
-                return;
-            }
-            
-            if (!formSelectedTime) {
-                alert('❌ Пожалуйста, выберите время');
-                return;
-            }
-            
-            // Формируем данные для отправки
-            const message = `Новая заявка с сайта МастерНаЧас!\n\nИмя: ${name}\nТелефон: ${phone}\nУслуга: ${service}\nДата: ${formSelectedDate}\nВремя: ${formSelectedTime}`;
-            
-            // Отправка через FormSubmit (бесплатно, без регистрации)
-            const formData = new FormData();
-            formData.append('email', 'gipsogen2008@gmail.com');
-            formData.append('message', message);
-            formData.append('_subject', '🔧 Новая заявка от МастерНаЧас');
-            formData.append('_captcha', 'false');
-            
-            try {
-                const response = await fetch('https://formsubmit.co/ajax/gipsogen2008@gmail.com', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (result.success === 'success' || response.ok) {
-                    alert(`✅ Спасибо, ${name}! Заявка отправлена. Я перезвоню вам за 5 минут.\n\n📅 ${formSelectedDate} в ${formSelectedTime}\n💳 Чек через приложение «Мой налог» — официально.`);
-                    
-                    // Очищаем форму
-                    document.getElementById('formName').value = '';
-                    document.getElementById('formPhone').value = '';
-                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-                    document.querySelectorAll('.date-slot').forEach(s => s.classList.remove('selected'));
-                    if (dateSlotsContainer?.firstChild) {
-                        dateSlotsContainer.firstChild.classList.add('selected');
-                        formSelectedDate = dateSlotsContainer.firstChild.dataset.date;
-                    }
-                    formSelectedTime = null;
-                } else {
-                    alert('⚠️ Ошибка отправки. Пожалуйста, позвоните по телефону: +7' + YOUR_PHONE);
-                }
-            } catch (error) {
-                console.error('Ошибка:', error);
-                alert('⚠️ Ошибка соединения. Пожалуйста, позвоните по телефону: +7' + YOUR_PHONE);
-            }
-        });
-    }
+            alert('❌ Пожалуйста, выберите дату');
+            return false;
+        }
+        if (!formSelectedTime) {
+            e.preventDefault();
+            alert('❌ Пожалуйста, выберите время');
+            return false;
+        }
+        document.getElementById('selectedDateInput').value = formSelectedDate;
+        document.getElementById('selectedTimeInput').value = formSelectedTime;
+    });
     
     console.log('Сайт загружен! Номер телефона: +7' + YOUR_PHONE);
 </script>
