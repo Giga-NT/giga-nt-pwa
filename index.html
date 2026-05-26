@@ -2,31 +2,1246 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
-    <title>Giga-NT PWA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Мастер на час | Алексей · Сантехника, Электрика, Окна — 1200₽/час</title>
+    <meta name="description" content="Мастер на час Алексей. Самозанятый, чек через налоговую. Выезд в пригород до 20 км. Приедем за 60 минут. Онлайн запись с выбором даты и времени.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Inter', sans-serif;
+			background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+			color: #1a2c3e;
+			line-height: 1.4;
+			padding-bottom: 80px;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 16px;
+		}
+
+		/* Кастомный скролл */
+		::-webkit-scrollbar {
+			width: 8px;
+			height: 8px;
+		}
+		::-webkit-scrollbar-track {
+			background: #e2e8f0;
+			border-radius: 10px;
+		}
+		::-webkit-scrollbar-thumb {
+			background: #f39c12;
+			border-radius: 10px;
+		}
+		::-webkit-scrollbar-thumb:hover {
+			background: #e67e22;
+		}
+
+		/* Header */
+		.header {
+			background: rgba(255, 255, 255, 0.98);
+			backdrop-filter: blur(10px);
+			position: sticky;
+			top: 0;
+			z-index: 100;
+			border-bottom: 1px solid rgba(243, 156, 18, 0.2);
+			box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
+		}
+		.header-inner {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 12px 0;
+		}
+		.logo {
+			font-weight: 800;
+			font-size: 1.3rem;
+			background: linear-gradient(135deg, #1a5f7a, #f39c12);
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+		}
+		.header-phone {
+			background: linear-gradient(135deg, #1a5f7a, #0f2c38);
+			color: white;
+			padding: 8px 16px;
+			border-radius: 40px;
+			font-weight: 600;
+			font-size: 0.9rem;
+			text-decoration: none;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			transition: all 0.2s;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+		}
+		.header-phone:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+		}
+
+		/* Hero — с текстурой */
+		.hero {
+			background: linear-gradient(135deg, #0a2e3d 0%, #155a74 50%, #1a6e8a 100%);
+			border-radius: 24px;
+			margin: 20px 0 24px;
+			padding: 32px 24px;
+			color: white;
+			text-align: center;
+			position: relative;
+			overflow: hidden;
+			box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+		}
+		.hero::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="rgba(255,255,255,0.06)"/></svg>') repeat-x;
+			background-size: cover;
+			opacity: 0.4;
+			pointer-events: none;
+		}
+		.hero h1 {
+			font-size: 1.8rem;
+			font-weight: 800;
+			margin-bottom: 8px;
+			position: relative;
+		}
+		.hero-sub {
+			font-size: 0.9rem;
+			opacity: 0.9;
+			margin-bottom: 20px;
+			position: relative;
+		}
+		.hero-price {
+			background: rgba(0,0,0,0.25);
+			backdrop-filter: blur(4px);
+			display: inline-block;
+			padding: 8px 24px;
+			border-radius: 60px;
+			margin-bottom: 16px;
+			position: relative;
+		}
+		.hero-price .price {
+			font-size: 2rem;
+			font-weight: 800;
+			color: #f39c12;
+		}
+		.price-fix {
+			background: #f39c12;
+			color: #1a2c3e;
+			font-size: 0.7rem;
+			font-weight: 700;
+			display: inline-block;
+			padding: 4px 12px;
+			border-radius: 50px;
+			margin-bottom: 20px;
+			position: relative;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+		}
+		.hero-features {
+			display: flex;
+			justify-content: center;
+			gap: 12px;
+			flex-wrap: wrap;
+			margin-bottom: 20px;
+			position: relative;
+		}
+		.hero-features span {
+			background: rgba(255,255,255,0.12);
+			backdrop-filter: blur(4px);
+			padding: 6px 14px;
+			border-radius: 40px;
+			font-size: 0.75rem;
+			font-weight: 500;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+		.btn-hero {
+			background: linear-gradient(135deg, #f39c12, #e67e22);
+			border: none;
+			padding: 14px 28px;
+			border-radius: 50px;
+			font-weight: 800;
+			font-size: 1rem;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			width: 100%;
+			justify-content: center;
+			transition: all 0.2s;
+			box-shadow: 0 4px 12px rgba(243,156,18,0.3);
+			position: relative;
+		}
+		.btn-hero:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 20px rgba(243,156,18,0.4);
+		}
+		@media (min-width: 480px) {
+			.btn-hero { width: auto; }
+			.hero h1 { font-size: 2.2rem; }
+		}
+
+		/* Блок "О мастере" с фото */
+		.about-master {
+			background: rgba(255, 255, 255, 0.98);
+			backdrop-filter: blur(0px);
+			border-radius: 24px;
+			padding: 24px;
+			margin: 24px 0;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 24px;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.03);
+			border: 1px solid rgba(255, 255, 255, 0.5);
+		}
+		.master-photo {
+			width: 120px;
+			height: 120px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 3px solid #f39c12;
+			background: linear-gradient(135deg, #d9e2e8, #b0c4d4);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 3rem;
+			color: #1a5f7a;
+			box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+		}
+		.master-info h3 {
+			font-size: 1.4rem;
+			margin-bottom: 6px;
+		}
+		.master-badge {
+			background: linear-gradient(135deg, #fef5e8, #fff0e0);
+			display: inline-block;
+			padding: 4px 12px;
+			border-radius: 50px;
+			font-size: 0.7rem;
+			font-weight: 600;
+			margin: 8px 0;
+		}
+		.master-stats {
+			display: flex;
+			gap: 16px;
+			justify-content: center;
+			flex-wrap: wrap;
+			margin-top: 12px;
+		}
+		.master-stats span {
+			font-size: 0.8rem;
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			background: #f8fafc;
+			padding: 4px 10px;
+			border-radius: 40px;
+		}
+		@media (min-width: 640px) {
+			.about-master { text-align: left; justify-content: flex-start; }
+			.master-stats { justify-content: flex-start; }
+		}
+
+		/* Аккордеон */
+		.services {
+			margin: 32px 0;
+		}
+		.section-title {
+			font-size: 1.5rem;
+			font-weight: 700;
+			margin-bottom: 20px;
+			text-align: center;
+			position: relative;
+		}
+		.section-title::after {
+			content: '';
+			display: block;
+			width: 60px;
+			height: 3px;
+			background: linear-gradient(90deg, #f39c12, #e67e22);
+			margin: 8px auto 0;
+			border-radius: 3px;
+		}
+		.accordion {
+			background: rgba(255, 255, 255, 0.98);
+			border-radius: 20px;
+			overflow: hidden;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+			border: 1px solid rgba(255, 255, 255, 0.5);
+		}
+		.accordion-item {
+			border-bottom: 1px solid #eef2f6;
+		}
+		.accordion-header {
+			padding: 16px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-weight: 700;
+			background: transparent;
+			transition: all 0.2s ease;
+			border-radius: 16px;
+			margin: 4px 8px;
+		}
+		.accordion-header:hover {
+			background: linear-gradient(135deg, #fff8f0, #fff0e0);
+			transform: translateX(4px);
+		}
+		.accordion-header i:first-child {
+			font-size: 1.3rem;
+			width: 32px;
+			color: #f39c12;
+		}
+		.accordion-title {
+			flex: 1;
+			font-size: 0.95rem;
+		}
+		.accordion-price {
+			color: #e67e22;
+			font-weight: 700;
+			font-size: 0.8rem;
+			margin-right: 8px;
+		}
+		.accordion-arrow {
+			color: #bbb;
+			transition: transform 0.2s;
+		}
+		.accordion-content {
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 0.3s ease;
+			background: #fafdff;
+		}
+		.accordion-inner {
+			padding: 0 16px 16px 48px;
+		}
+		.service-list {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+		}
+		.service-list span {
+			background: linear-gradient(135deg, #f0f5f9, #e8eef3);
+			padding: 4px 10px;
+			border-radius: 30px;
+			font-size: 0.7rem;
+			font-weight: 500;
+			transition: all 0.2s;
+		}
+		.service-list span:hover {
+			transform: translateY(-1px);
+			background: #f39c12;
+			color: white;
+		}
+
+		/* Калькулятор */
+		.calculator {
+			background: linear-gradient(135deg, #ffffff, #fffef7);
+			border-radius: 24px;
+			padding: 24px;
+			margin: 24px 0;
+			text-align: center;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+			border-bottom: 3px solid #f39c12;
+			border: 1px solid rgba(255, 255, 255, 0.5);
+		}
+		.calc-row {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			justify-content: center;
+			margin-top: 16px;
+		}
+		.calc-item {
+			background: linear-gradient(135deg, #f0f5f9, #e8eef3);
+			padding: 10px 18px;
+			border-radius: 50px;
+			cursor: pointer;
+			transition: all 0.2s;
+			font-weight: 600;
+			font-size: 0.85rem;
+			border: 1px solid #eef2f5;
+		}
+		.calc-item:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+		}
+		.calc-item.selected {
+			background: linear-gradient(135deg, #f39c12, #e67e22);
+			color: white;
+			box-shadow: 0 4px 12px rgba(243,156,18,0.3);
+		}
+		.calc-result {
+			margin-top: 20px;
+			font-size: 1.2rem;
+			font-weight: 800;
+			color: #e67e22;
+		}
+
+		/* Преимущества */
+		.features {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 16px;
+			margin: 24px 0;
+			justify-content: center;
+		}
+		.feature {
+			background: linear-gradient(135deg, #ffffff, #fef9ef);
+			padding: 12px 24px;
+			border-radius: 60px;
+			font-size: 0.8rem;
+			font-weight: 600;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+			border-left: 4px solid #f39c12;
+			transition: all 0.2s;
+		}
+		.feature:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+		}
+
+		/* Официальный статус */
+		.official {
+			background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+			border-radius: 24px;
+			padding: 20px;
+			margin: 24px 0;
+			text-align: center;
+			border-bottom: 2px solid #4caf50;
+			box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+		}
+		.official-badge {
+			background: #2e7d32;
+			color: white;
+			display: inline-block;
+			padding: 8px 20px;
+			border-radius: 60px;
+			font-weight: 700;
+			font-size: 0.85rem;
+			margin-bottom: 12px;
+			box-shadow: 0 2px 8px rgba(46,125,50,0.3);
+		}
+		.official-text {
+			font-size: 0.8rem;
+			color: #2e3b2e;
+		}
+
+		/* Отзывы */
+		.reviews {
+			background: rgba(255, 255, 255, 0.98);
+			border-radius: 24px;
+			padding: 24px 20px;
+			margin: 32px 0;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+			border: 1px solid rgba(255, 255, 255, 0.5);
+		}
+		.reviews h3 {
+			font-size: 1.3rem;
+			margin-bottom: 16px;
+			text-align: center;
+		}
+		.reviews-grid {
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
+		.review {
+			background: linear-gradient(135deg, #ffffff, #fafcff);
+			padding: 14px;
+			border-radius: 16px;
+			border-left: 4px solid #f39c12;
+			transition: all 0.2s;
+			box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+		}
+		.review:hover {
+			transform: translateX(5px);
+			box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+		}
+		.review-text {
+			font-size: 0.85rem;
+			margin-bottom: 8px;
+		}
+		.review-name {
+			font-weight: 700;
+			font-size: 0.75rem;
+			color: #1a5f7a;
+		}
+		@media (min-width: 640px) {
+			.reviews-grid { flex-direction: row; }
+			.review { flex: 1; }
+		}
+
+		/* Зона выезда */
+		.zone {
+			background: linear-gradient(135deg, #fff8e7, #fff3e0);
+			border-radius: 20px;
+			padding: 16px 20px;
+			margin: 24px 0;
+			text-align: center;
+			border-left: 6px solid #f39c12;
+			box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+		}
+		.zone i {
+			color: #f39c12;
+			margin-right: 6px;
+		}
+
+		/* Контакты */
+		.contacts {
+			background: rgba(255, 255, 255, 0.98);
+			border-radius: 24px;
+			padding: 20px;
+			margin: 32px 0;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			align-items: center;
+			gap: 12px;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+			border: 1px solid rgba(255, 255, 255, 0.5);
+		}
+		.contact {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			font-size: 0.8rem;
+		}
+		.contact i {
+			font-size: 1.2rem;
+			color: #f39c12;
+		}
+		.contact a {
+			text-decoration: none;
+			color: #1a5f7a;
+			font-weight: 600;
+			transition: color 0.2s;
+		}
+		.contact a:hover {
+			color: #f39c12;
+		}
+
+		/* Стилизованный SELECT */
+		.custom-select {
+			position: relative;
+			max-width: 400px;
+			margin: 0 auto;
+		}
+		.custom-select select {
+			width: 100%;
+			padding: 14px 18px;
+			border-radius: 50px;
+			border: none;
+			font-family: inherit;
+			font-size: 0.9rem;
+			background: white;
+			cursor: pointer;
+			appearance: none;
+			-webkit-appearance: none;
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236c7a89' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+			background-repeat: no-repeat;
+			background-position: right 18px center;
+			background-size: 18px;
+			transition: all 0.2s;
+		}
+		.custom-select select:focus {
+			outline: none;
+			box-shadow: 0 0 0 3px rgba(243,156,18,0.3);
+		}
+
+		/* Календарь дат */
+		.date-slots {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			justify-content: center;
+			margin: 16px 0;
+		}
+		.date-slot {
+			background: rgba(255,255,255,0.2);
+			padding: 10px 16px;
+			border-radius: 40px;
+			font-size: 0.8rem;
+			cursor: pointer;
+			transition: all 0.2s;
+			text-align: center;
+			min-width: 70px;
+			backdrop-filter: blur(4px);
+		}
+		.date-slot:hover {
+			background: rgba(243,156,18,0.3);
+			transform: translateY(-2px);
+		}
+		.date-slot.selected {
+			background: #f39c12;
+			color: #1a2c3e;
+			box-shadow: 0 4px 12px rgba(243,156,18,0.3);
+		}
+		.date-weekday {
+			font-weight: 700;
+			font-size: 0.7rem;
+		}
+
+		/* Форма */
+		.form-block {
+			background: linear-gradient(135deg, #1a5f7a, #0f2c38);
+			border-radius: 24px;
+			padding: 28px 20px;
+			margin: 32px 0;
+			color: white;
+			text-align: center;
+			box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+			position: relative;
+			overflow: hidden;
+		}
+		.form-block::before {
+			content: '';
+			position: absolute;
+			top: -50%;
+			left: -50%;
+			width: 200%;
+			height: 200%;
+			background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+			pointer-events: none;
+		}
+		.form-block h3 {
+			font-size: 1.3rem;
+			margin-bottom: 6px;
+			position: relative;
+		}
+		.form-block p {
+			font-size: 0.8rem;
+			opacity: 0.9;
+			margin-bottom: 20px;
+			position: relative;
+		}
+		.form-group {
+			margin-bottom: 14px;
+			max-width: 400px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		.form-group input {
+			width: 100%;
+			padding: 14px 18px;
+			border-radius: 50px;
+			border: none;
+			font-family: inherit;
+			font-size: 0.9rem;
+			transition: all 0.2s;
+		}
+		.form-group input:focus {
+			outline: none;
+			box-shadow: 0 0 0 3px rgba(243,156,18,0.5);
+			transform: translateY(-1px);
+		}
+		.time-slots {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			justify-content: center;
+			margin: 16px 0;
+		}
+		.time-slot {
+			background: rgba(255,255,255,0.2);
+			padding: 8px 16px;
+			border-radius: 40px;
+			font-size: 0.8rem;
+			cursor: pointer;
+			transition: all 0.2s;
+			backdrop-filter: blur(4px);
+		}
+		.time-slot:hover {
+			background: rgba(243,156,18,0.4);
+			transform: translateY(-2px);
+		}
+		.time-slot.selected {
+			background: #f39c12;
+			color: #1a2c3e;
+			box-shadow: 0 4px 12px rgba(243,156,18,0.3);
+		}
+		.form-block button {
+			background: linear-gradient(135deg, #f39c12, #e67e22);
+			border: none;
+			padding: 14px 28px;
+			border-radius: 50px;
+			font-weight: 800;
+			cursor: pointer;
+			font-size: 1rem;
+			margin-top: 8px;
+			transition: all 0.2s;
+			box-shadow: 0 4px 12px rgba(243,156,18,0.3);
+		}
+		.form-block button:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 20px rgba(243,156,18,0.4);
+		}
+		.form-micro {
+			font-size: 0.7rem;
+			margin-top: 12px;
+			opacity: 0.7;
+		}
+
+		/* Липкая кнопка */
+		.sticky-call {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: rgba(255, 255, 255, 0.98);
+			backdrop-filter: blur(10px);
+			padding: 12px 16px;
+			box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+			z-index: 99;
+			display: flex;
+			gap: 12px;
+		}
+		.sticky-call button {
+			flex: 1;
+			padding: 14px;
+			border: none;
+			border-radius: 50px;
+			font-weight: 800;
+			font-size: 0.9rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+		.sticky-call .btn-call {
+			background: linear-gradient(135deg, #f39c12, #e67e22);
+			box-shadow: 0 2px 8px rgba(243,156,18,0.3);
+		}
+		.sticky-call .btn-calc {
+			background: linear-gradient(135deg, #1a5f7a, #0f2c38);
+			color: white;
+		}
+		.sticky-call button:hover {
+			transform: translateY(-2px);
+		}
+		@media (min-width: 768px) {
+			.sticky-call { display: none; }
+			body { padding-bottom: 0; }
+		}
+
+		footer {
+			text-align: center;
+			padding: 20px 0;
+			font-size: 0.7rem;
+			color: #6c7a89;
+			border-top: 1px solid rgba(243,156,18,0.2);
+		}
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Добро пожаловать в Giga-NT PWA!</h1>
-        <p>Это прогрессивное веб-приложение.</p>
-    </header>
-    <main>
-        <p>Здесь вы можете использовать функциональность вашего веб-сайта даже в офлайн-режиме.</p>
-    </main>
+
+<header class="header">
+    <div class="container header-inner">
+        <div class="logo">МАСТЕР<span style="color:#f39c12;">НАЧАС</span></div>
+        <a href="tel:+79991234567" class="header-phone"><i class="fas fa-phone-alt"></i> +7 (999) 123-45-67</a>
+    </div>
+</header>
+
+<div class="container">
+    <!-- Hero -->
+    <div class="hero">
+        <h1>Мастер на час</h1>
+        <div class="hero-sub">Сантехника · Электрика · Окна · Ремонт</div>
+        <div class="hero-price">
+            <span class="price">1200 ₽</span> <small>/ час</small>
+        </div>
+        <div class="price-fix"><i class="fas fa-lock"></i> Фиксируем цену до начала работ</div>
+		<div class="hero-features">
+			<span><i class="fas fa-clock"></i> Приедем за 60 мин</span>
+			<span><i class="fas fa-car"></i> Выезд до 20 км от Н.Тагила</span>
+			<span><i class="fas fa-tools"></i> Свои инструменты</span>
+		</div>
+        <button class="btn-hero" id="heroCallBtn"><i class="fas fa-phone"></i> Вызвать мастера</button>
+    </div>
+
+    <!-- Блок "О мастере" с личной фотографией -->
+    <div class="about-master">
+		<img src="i.jpg" class="master-photo" alt="Алексей, мастер на час">
+        <div class="master-info">
+            <h3>Алексей Кондратьев</h3>
+            <div class="master-badge"><i class="fas fa-star"></i> Мастер высшей категории · Стаж 8 лет</div>
+            <div class="master-stats">
+                <span><i class="fas fa-check-circle"></i> 500+ довольных клиентов</span>
+                <span><i class="fas fa-trophy"></i> 0 поломок по гарантии</span>
+                <span><i class="fas fa-mobile-alt"></i> Самозанятый</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Услуги аккордеоном -->
+    <div class="services">
+        <div class="section-title">Что Я делаю</div>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header" data-target="s1">
+                    <i class="fas fa-faucet"></i>
+                    <span class="accordion-title">Сантехника</span>
+                    <span class="accordion-price">от 1200 ₽/ч</span>
+                    <i class="fas fa-chevron-down accordion-arrow"></i>
+                </div>
+                <div class="accordion-content" id="s1">
+                    <div class="accordion-inner">
+                        <div class="service-list">
+                            <span>🚰 Смеситель</span>
+                            <span>🚽 Унитаз</span>
+                            <span>🚿 Душевая</span>
+                            <span>💧 Фильтр</span>
+                            <span>🌀 Засор</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" data-target="s2">
+                    <i class="fas fa-bolt"></i>
+                    <span class="accordion-title">Электрика</span>
+                    <span class="accordion-price">от 1300 ₽/ч</span>
+                    <i class="fas fa-chevron-down accordion-arrow"></i>
+                </div>
+                <div class="accordion-content" id="s2">
+                    <div class="accordion-inner">
+                        <div class="service-list">
+                            <span>💡 Люстры</span>
+                            <span>🔌 Розетки</span>
+                            <span>⚡ Автоматы</span>
+                            <span>📺 Подключение</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" data-target="s3">
+                    <i class="fas fa-window-maximize"></i>
+                    <span class="accordion-title">Пластиковые окна</span>
+                    <span class="accordion-price">от 1000 ₽</span>
+                    <i class="fas fa-chevron-down accordion-arrow"></i>
+                </div>
+                <div class="accordion-content" id="s3">
+                    <div class="accordion-inner">
+                        <div class="service-list">
+                            <span>🪟 Регулировка</span>
+                            <span>🧽 Уплотнитель</span>
+                            <span>🔧 Ручки</span>
+                            <span>🪞 Стеклопакет</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" data-target="s4">
+                    <i class="fas fa-tools"></i>
+                    <span class="accordion-title">Ремонт / Сборка</span>
+                    <span class="accordion-price">1200 ₽/ч</span>
+                    <i class="fas fa-chevron-down accordion-arrow"></i>
+                </div>
+                <div class="accordion-content" id="s4">
+                    <div class="accordion-inner">
+                        <div class="service-list">
+                            <span>🪑 Сборка мебели</span>
+                            <span>🚪 Двери/замки</span>
+                            <span>🖼️ Полки</span>
+                            <span>🔨 Плинтусы</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Калькулятор стоимости -->
+    <div class="calculator">
+        <div class="section-title" style="margin-bottom: 8px;">Калькулятор стоимости</div>
+        <p style="font-size: 0.8rem; color: #6c7a89;">Выберите работу и примерное время</p>
+        <div class="calc-row">
+            <div class="calc-item" data-work="Сантехника" data-price="1200">🔧 Сантехника</div>
+            <div class="calc-item" data-work="Электрика" data-price="1300">⚡ Электрика</div>
+            <div class="calc-item" data-work="Окна" data-price="1000">🪟 Окна</div>
+            <div class="calc-item" data-work="Ремонт" data-price="1200">🛠️ Ремонт</div>
+        </div>
+        <div class="calc-row">
+            <div class="calc-item" data-hours="1">1 час</div>
+            <div class="calc-item" data-hours="2">2 часа</div>
+            <div class="calc-item" data-hours="3">3 часа</div>
+            <div class="calc-item" data-hours="4">4 часа</div>
+        </div>
+        <div class="calc-result" id="calcResult">Выберите работу и время</div>
+    </div>
+
+    <!-- Официальный статус: самозанятый + чек через налоговую -->
+    <div class="official">
+        <div class="official-badge"><i class="fas fa-check-circle"></i> Работаю официально как самозанятый</div>
+        <div class="official-text">
+            <i class="fas fa-receipt"></i> Чек выдаётся через приложение «Мой налог» — данные поступают в ФНС<br>
+            <span style="display: inline-block; margin-top: 6px;">Это подтверждает легальность сделки и вашу гарантию</span>
+        </div>
+    </div>
+
+    <!-- Преимущества -->
+    <div class="features">
+        <div class="feature"><i class="fas fa-stopwatch"></i> За 60 минут</div>
+        <div class="feature"><i class="fas fa-receipt"></i> Чек из ФНС</div>
+        <div class="feature"><i class="fas fa-hand-sparkles"></i> Чистота</div>
+    </div>
+
+	<div class="zone">
+		<i class="fas fa-car"></i> <strong>Выезжаю по Нижнему Тагилу и пригороду до 20 км</strong><br>
+		<span style="font-size: 0.8rem;">
+			🏙️ Ленинский район · Тагилстроевский район · Дзержинский район<br>
+			🏘️ Гальянка · Вагонка· Северный· Город· Тагилстрой · Старатель · Покровское-1 и 2<br>
+			🌲 Евстюниха · Малыгино · Горбуново · Серебрянка<br>
+			📍 Пригородные посёлки и сёла в радиусе 20 км от города
+		</span>
+	</div>
+
+    <!-- Отзывы -->
+    <div class="reviews">
+        <h3>Клиенты говорят</h3>
+        <div class="reviews-grid">
+            <div class="review">
+                <div class="review-text">«Приехал через 40 минут. Смеситель поменял быстро. Договор, чек — всё официально.»</div>
+                <div class="review-name">Анна, Нижний Тагил (Вагонка)</div>
+            </div>
+            <div class="review">
+                <div class="review-text">«Розетку починили и люстру повесили за час. Выдали чек через налоговую — спокойно на душе.»</div>
+                <div class="review-name">Дмитрий, Н.Тагил (ГГМ)</div>
+            </div>
+            <div class="review">
+                <div class="review-text">«Окно отрегулировали, даже в воскресенье приехал. Чек прислал на почту. Рекомендую!»</div>
+                <div class="review-name">Елена, Нижний Тагил (ГГМ)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Контакты -->
+    <div class="contacts">
+        <div class="contact"><i class="fab fa-telegram"></i> <a href="#" id="tgLink">@master_aleksey</a></div>
+        <div class="contact"><i class="fab fa-whatsapp"></i> <a href="#" id="waLink">+7 (999) 123-45-67</a></div>
+        <div class="contact"><i class="fas fa-envelope"></i> <span id="emailSpan">aleksey@master-na-chas.ru</span></div>
+    </div>
+
+<!-- Форма с выбором ДАТЫ + ВРЕМЕНИ + отправка на почту -->
+<div class="form-block">
+    <h3>Записаться на удобное время</h3>
+    <p>Перезвоню за 5 минут, согласуем детали</p>
     
-    <script>
-        // Регистрация Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('service-worker.js').then(function(registration) {
-                    console.log('Service Worker зарегистрирован с областью:', registration.scope);
-                }, function(error) {
-                    console.log('Ошибка регистрации Service Worker:', error);
-                });
-            });
+<form id="callbackForm" action="https://api.web3forms.com/submit" method="POST">
+    <!-- Ключ доступа (бесплатный) -->
+    <input type="hidden" name="access_key" value="c2a2e8f1-8b9c-4d3e-9a7b-6c5d4e3f2a1b">
+    
+    <!-- Настройки -->
+    <input type="hidden" name="subject" value="🔧 Новая заявка от МастерНаЧас">
+    <input type="hidden" name="from_name" value="МастерНаЧас Сайт">
+    
+    <!-- Перенаправление после отправки (необязательно) -->
+    <input type="hidden" name="redirect" value="https://web3forms.com/success">
+    
+    <!-- Скрытые поля для данных -->
+    <input type="hidden" name="Имя" id="hiddenName">
+    <input type="hidden" name="Телефон" id="hiddenPhone">
+    <input type="hidden" name="Услуга" id="hiddenService">
+    <input type="hidden" name="Дата" id="selectedDateInput">
+    <input type="hidden" name="Время" id="selectedTimeInput">
+    
+    <div class="form-group">
+        <input type="text" id="formName" placeholder="Ваше имя" required>
+    </div>
+    <div class="form-group">
+        <input type="tel" id="formPhone" placeholder="Телефон" required>
+    </div>
+    <div class="form-group custom-select">
+        <select id="formService" required>
+            <option value="Сантехника">🔧 Сантехника</option>
+            <option value="Электрика">⚡ Электрика</option>
+            <option value="Окна">🪟 Пластиковые окна</option>
+            <option value="Ремонт/Сборка">🛠️ Ремонт / Сборка мебели</option>
+        </select>
+    </div>
+    
+    <!-- Выбор ДАТЫ -->
+    <div style="margin: 8px 0 4px; font-size: 0.8rem;">Выберите дату:</div>
+    <div class="date-slots" id="dateSlots"></div>
+    
+    <!-- Выбор ВРЕМЕНИ -->
+    <div style="margin: 8px 0 4px; font-size: 0.8rem;">Выберите время:</div>
+    <div class="time-slots" id="timeSlots">
+        <div class="time-slot" data-time="9:00">9:00</div>
+        <div class="time-slot" data-time="10:00">10:00</div>
+        <div class="time-slot" data-time="11:00">11:00</div>
+        <div class="time-slot" data-time="12:00">12:00</div>
+        <div class="time-slot" data-time="13:00">13:00</div>
+        <div class="time-slot" data-time="14:00">14:00</div>
+        <div class="time-slot" data-time="15:00">15:00</div>
+        <div class="time-slot" data-time="16:00">16:00</div>
+        <div class="time-slot" data-time="17:00">17:00</div>
+        <div class="time-slot" data-time="18:00">18:00</div>
+    </div>
+    
+    <button type="submit" id="submitBtn">Записаться →</button>
+</form>
+    <div class="form-micro"><i class="fas fa-check-circle"></i> Приеду в выбранное время. Чек через налоговую</div>
+</div>
+
+<!-- Липкая кнопка на мобильных -->
+<div class="sticky-call">
+    <button class="btn-call" id="stickyCallBtn"><i class="fas fa-phone-alt"></i> Позвонить</button>
+    <button class="btn-calc" id="stickyCalcBtn"><i class="fas fa-calculator"></i> Калькулятор</button>
+</div>
+
+<script>
+    // ==================== АККОРДЕОН ====================
+    const headers = document.querySelectorAll('.accordion-header');
+    
+    function closeAll(exceptId) {
+        document.querySelectorAll('.accordion-content').forEach(c => {
+            if (c.id !== exceptId) {
+                c.style.maxHeight = null;
+                const h = document.querySelector(`.accordion-header[data-target="${c.id}"]`);
+                if (h) {
+                    const arrow = h.querySelector('.accordion-arrow');
+                    if (arrow) arrow.style.transform = 'rotate(0deg)';
+                }
+            }
+        });
+    }
+    
+    function toggle(targetId) {
+        const panel = document.getElementById(targetId);
+        if (!panel) return;
+        const isOpen = panel.style.maxHeight && panel.style.maxHeight !== '0px';
+        const header = document.querySelector(`.accordion-header[data-target="${targetId}"]`);
+        const arrow = header?.querySelector('.accordion-arrow');
+        if (!isOpen) {
+            closeAll(targetId);
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+            if (arrow) arrow.style.transform = 'rotate(180deg)';
+        } else {
+            panel.style.maxHeight = null;
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
         }
-    </script>
+    }
+    
+    headers.forEach(h => h.addEventListener('click', () => toggle(h.dataset.target)));
+    setTimeout(() => toggle('s1'), 100);
+
+    // ==================== ТЕЛЕФОН ====================
+    const YOUR_PHONE = '79991234567';
+    
+    function makeCall() { 
+        window.location.href = `tel:+${YOUR_PHONE}`; 
+    }
+    
+    document.getElementById('heroCallBtn')?.addEventListener('click', makeCall);
+    document.getElementById('stickyCallBtn')?.addEventListener('click', makeCall);
+    document.querySelector('.header-phone')?.addEventListener('click', makeCall);
+    
+    document.getElementById('stickyCalcBtn')?.addEventListener('click', () => {
+        document.querySelector('.calculator')?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // ==================== TELEGRAM / WHATSAPP ====================
+    const TG_USERNAME = 'master_aleksey';
+    document.getElementById('tgLink')?.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        window.open(`https://t.me/${TG_USERNAME}`, '_blank'); 
+    });
+    
+    document.getElementById('waLink')?.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        window.open(`https://wa.me/${YOUR_PHONE}`, '_blank'); 
+    });
+
+    // ==================== EMAIL ====================
+    const MY_EMAIL = 'gipsogen2008@gmail.com';
+    document.getElementById('copyEmailBtn')?.addEventListener('click', () => {
+        navigator.clipboard.writeText(MY_EMAIL);
+        alert('Email скопирован: ' + MY_EMAIL);
+    });
+
+    // ==================== КАЛЬКУЛЯТОР ====================
+    let calcSelectedWorkPrice = null;
+    let calcSelectedWorkName = null;
+    let calcSelectedHours = null;
+
+    document.querySelectorAll('.calc-item[data-work]').forEach(el => {
+        el.addEventListener('click', () => {
+            document.querySelectorAll('.calc-item[data-work]').forEach(e => e.classList.remove('selected'));
+            el.classList.add('selected');
+            calcSelectedWorkPrice = parseInt(el.dataset.price);
+            calcSelectedWorkName = el.dataset.work;
+            updateCalcResult();
+        });
+    });
+    
+    document.querySelectorAll('.calc-item[data-hours]').forEach(el => {
+        el.addEventListener('click', () => {
+            document.querySelectorAll('.calc-item[data-hours]').forEach(e => e.classList.remove('selected'));
+            el.classList.add('selected');
+            calcSelectedHours = parseInt(el.dataset.hours);
+            updateCalcResult();
+        });
+    });
+    
+    function updateCalcResult() {
+        const resultDiv = document.getElementById('calcResult');
+        if (calcSelectedWorkPrice && calcSelectedHours) {
+            const total = calcSelectedWorkPrice * calcSelectedHours;
+            resultDiv.innerHTML = `${calcSelectedWorkName}, ${calcSelectedHours} ч = <span style="font-size:1.4rem;">${total} ₽</span>`;
+        } else if (calcSelectedWorkPrice) {
+            resultDiv.innerHTML = `Выберите время (часы)`;
+        } else if (calcSelectedHours) {
+            resultDiv.innerHTML = `Выберите тип работы`;
+        } else {
+            resultDiv.innerHTML = `Выберите работу и время`;
+        }
+    }
+
+    // ==================== ДАТЫ (календарь) ====================
+    const dateSlotsContainer = document.getElementById('dateSlots');
+    let formSelectedDate = null;
+    const weekdays = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+    const months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+    const today = new Date();
+    
+    function formatDate(date) {
+        const day = date.getDate();
+        const month = months[date.getMonth()];
+        const weekday = weekdays[date.getDay()];
+        return {
+            full: `${day} ${month}`,
+            weekday: weekday,
+            dateKey: date.toISOString().split('T')[0]
+        };
+    }
+    
+    if (dateSlotsContainer) {
+        for (let i = 0; i < 14; i++) {
+            const date = new Date();
+            date.setDate(today.getDate() + i);
+            const formatted = formatDate(date);
+            const slot = document.createElement('div');
+            slot.className = 'date-slot';
+            if (i === 0) slot.classList.add('selected');
+            slot.innerHTML = `<div class="date-weekday">${formatted.weekday}</div><div>${formatted.full}</div>`;
+            slot.dataset.date = formatted.dateKey;
+            if (i === 0) formSelectedDate = formatted.dateKey;
+            slot.addEventListener('click', () => {
+                document.querySelectorAll('.date-slot').forEach(s => s.classList.remove('selected'));
+                slot.classList.add('selected');
+                formSelectedDate = slot.dataset.date;
+            });
+            dateSlotsContainer.appendChild(slot);
+        }
+    }
+
+    // ==================== ВЫБОР ВРЕМЕНИ ====================
+    let formSelectedTime = null;
+    document.querySelectorAll('.time-slot').forEach(slot => {
+        slot.addEventListener('click', () => {
+            document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+            slot.classList.add('selected');
+            formSelectedTime = slot.dataset.time;
+        });
+    });
+
+// ==================== ОТПРАВКА НА ПОЧТУ ЧЕРЕЗ WEB3FORMS ====================
+const submitBtn = document.getElementById('submitBtn');
+
+if (submitBtn) {
+    submitBtn.addEventListener('click', async (e) => {
+        e.preventDefault();  // Останавливаем стандартную отправку формы
+        
+        const name = document.getElementById('formName')?.value.trim();
+        const phone = document.getElementById('formPhone')?.value.trim();
+        const service = document.getElementById('formService')?.value;
+        
+        if (!name || !phone) {
+            alert('❌ Заполните имя и телефон');
+            return;
+        }
+        
+        if (!formSelectedDate) {
+            alert('❌ Пожалуйста, выберите дату');
+            return;
+        }
+        
+        if (!formSelectedTime) {
+            alert('❌ Пожалуйста, выберите время');
+            return;
+        }
+        
+        // Заполняем скрытые поля формы
+        document.getElementById('hiddenName').value = name;
+        document.getElementById('hiddenPhone').value = phone;
+        document.getElementById('hiddenService').value = service;
+        document.getElementById('selectedDateInput').value = formSelectedDate;
+        document.getElementById('selectedTimeInput').value = formSelectedTime;
+        
+        // Отправляем форму через Web3Forms
+        const form = document.getElementById('callbackForm');
+        const formData = new FormData(form);
+        
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                alert(`✅ Спасибо, ${name}! Заявка отправлена. Я перезвоню вам за 5 минут.\n\n📅 ${formSelectedDate} в ${formSelectedTime}\n💳 Чек через приложение «Мой налог» — официально.`);
+                
+                // Очищаем форму
+                document.getElementById('formName').value = '';
+                document.getElementById('formPhone').value = '';
+                document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                document.querySelectorAll('.date-slot').forEach(s => s.classList.remove('selected'));
+                if (dateSlotsContainer?.firstChild) {
+                    dateSlotsContainer.firstChild.classList.add('selected');
+                    formSelectedDate = dateSlotsContainer.firstChild.dataset.date;
+                }
+                formSelectedTime = null;
+                document.getElementById('selectedDateInput').value = '';
+                document.getElementById('selectedTimeInput').value = '';
+            } else {
+                alert('⚠️ Ошибка отправки. Пожалуйста, позвоните по телефону:  YOUR_PHONE);
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('⚠️ Ошибка соединения. Пожалуйста, позвоните по телефону: +7' + YOUR_PHONE);
+        }
+    });
+}
+    
+    console.log('Сайт загружен!');
+</script>
 </body>
 </html>
